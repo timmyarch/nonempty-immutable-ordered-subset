@@ -9,7 +9,7 @@ export function ToppingsField({
   setState,
   allToppings,
 }: {
-  selectedToppings: Topping[];
+  selectedToppings: Topping[] | null;
   setState: SetState<SelectionState>;
   allToppings: Topping[];
 }) {
