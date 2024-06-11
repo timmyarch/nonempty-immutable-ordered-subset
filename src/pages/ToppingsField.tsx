@@ -1,23 +1,63 @@
 import { Topping, SelectionState } from "./App";
 import { SetState } from "./Fields";
 
+/**
+ * The Toppings field.
+ */
 export function ToppingsField({
-  toppings,
+  selectedToppings,
   setState,
   allToppings,
 }: {
-  toppings: SelectionState["toppings"];
+  selectedToppings: Topping[];
   setState: SetState<SelectionState>;
   allToppings: Topping[];
 }) {
+  const selectedToppingIds = new Set<number>(
+    selectedToppings && selectedToppings.map(({ id }) => id)
+  );
+
+  const unSelectedToppings = allToppings.filter(
+    ({ id }) => !selectedToppingIds.has(id)
+  );
+
+  const handleCheck = (topping: Topping) =>
+    setState((prev) => ({
+      ...prev,
+      toppings: prev.toppings ? [...prev.toppings, topping] : [topping],
+    }));
+
+  const handleUnCheck = (topping: Topping) => {
+    setState((prev) => ({
+      ...prev,
+      toppings:
+        prev.toppings && prev.toppings.filter(({ id }) => id !== topping.id),
+    }));
+  };
+
   return (
     <>
       Toppings: <br />
       <br />
-      {allToppings.map(({ id, label }) => (
+      {selectedToppings &&
+        selectedToppings.map((topping) => (
+          <label>
+            <input
+              type="checkbox"
+              checked={true}
+              onChange={() => handleUnCheck(topping)}
+            />
+            &nbsp; {topping.label} <br /> <br />
+          </label>
+        ))}
+      {unSelectedToppings.map((topping) => (
         <label>
-          <input type="checkbox" />
-          &nbsp; {label} <br /> <br />
+          <input
+            type="checkbox"
+            checked={false}
+            onChange={() => handleCheck(topping)}
+          />
+          &nbsp; {topping.label} <br /> <br />
         </label>
       ))}
     </>

@@ -44,7 +44,7 @@ export default function App() {
 
   const allToppings = fetchAllToppings();
 
-  // List of Field [Key, Value] Pairs, ordered with Non-null fields first, and null fields last.
+  // List of Field [Key, Value] Pairs, re-ordered with Non-null fields first, and null fields last.
   const orderedFields: [string, any | null][] = [
     ...Object.entries(selectionState).filter(
       ([fieldKey, fieldValue]) => fieldValue !== null
@@ -58,8 +58,15 @@ export default function App() {
     <>
       <h2 style={styles.title}>Pizza Time!</h2>
 
+      {/* Render each field based on oreder they appear in orderedFields list. */}
       {orderedFields.map(([fieldKey, fieldValue]) => (
-        <div key={fieldKey} style={styles.fieldDiv}>
+        <div
+          key={fieldKey}
+          style={{
+            ...styles.fieldDiv,
+            borderColor: fieldValue === null ? "black" : "red",
+          }}
+        >
           {(() => {
             switch (fieldKey) {
               case "size":
@@ -70,7 +77,7 @@ export default function App() {
               case "toppings":
                 return (
                   <ToppingsField
-                    toppings={fieldValue}
+                    selectedToppings={fieldValue}
                     setState={setSelectionState}
                     allToppings={allToppings}
                   />

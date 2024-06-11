@@ -1,6 +1,9 @@
 import { Size, AllSizes, Topping, SelectionState } from "./App";
 import { Dispatch, SetStateAction } from "react";
 
+/**
+ * The Size field.
+ */
 export function SizeField({
   size,
   setState,
@@ -35,6 +38,9 @@ export function SizeField({
   );
 }
 
+/**
+ * The Number of Sodas field.
+ */
 export function SodasField({
   numSodas,
   setState,

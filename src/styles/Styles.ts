@@ -17,7 +17,7 @@ const styles: Record<StyleName, CSSProperties> = {
 
   fieldDiv: {
     ...divStyle,
-    border: "1px solid black",
+    border: "1px solid",
   },
 };
 
