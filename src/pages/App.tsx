@@ -25,7 +25,19 @@ const fetchAllToppings = (): Topping[] => [
   { id: 4, label: "Pineapple" },
 ];
 
-/** Component State */
+/**
+ * Component State
+ *
+ * Representation Invariant: If there are no toppings selected,
+ * the toppings field MUST be null (instead of empty list).
+ *
+ * Filed nullity is important as it determines what order they are
+ * rendered and what color border they are rendered with.
+ *
+ * Selected fields (denoted by non-null value) are rendered first
+ * and have a red border. Unselected fields (denoted by null value)
+ * are rendered last and have a black border.
+ */
 export type SelectionState = {
   size: Size | null;
   toppings: Topping[] | null;
