@@ -29,9 +29,11 @@ export function SizeField({
         onChange={(e) => handleChange(e.target.value)}
         value={size ? size : undefined}
       >
-        <option value={undefined} />
+        <option value={undefined} key="" />
         {AllSizes.map((size) => (
-          <option value={size}>{size}</option>
+          <option value={size} key={size}>
+            {size}
+          </option>
         ))}
       </select>
     </>

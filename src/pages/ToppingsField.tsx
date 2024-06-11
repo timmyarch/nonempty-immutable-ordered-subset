@@ -41,7 +41,7 @@ export function ToppingsField({
       <br />
       {selectedToppings &&
         selectedToppings.map((topping) => (
-          <label>
+          <label key={topping.id}>
             <input
               type="checkbox"
               checked={true}
@@ -51,7 +51,7 @@ export function ToppingsField({
           </label>
         ))}
       {unSelectedToppings.map((topping) => (
-        <label>
+        <label key={topping.id}>
           <input
             type="checkbox"
             checked={false}
