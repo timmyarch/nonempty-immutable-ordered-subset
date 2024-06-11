@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SizeField, SodasField } from "./Fields";
 import { ToppingsField } from "./ToppingsField";
 import styles from "../styles/Styles";
+import { NonEmptyOrderedImmutableSet } from "../Collections";
 
 /* * * * * * * *
  * FIELD TYPES
@@ -28,7 +29,7 @@ const fetchAllToppings = (): Topping[] => [
 /** Component State */
 export type SelectionState = {
   size: Size | null;
-  toppings: Topping[] | null;
+  toppings: NonEmptyOrderedImmutableSet<number> | null;
   numSodas: number | null;
 };
 
