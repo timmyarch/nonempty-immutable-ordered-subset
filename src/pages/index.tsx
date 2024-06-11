@@ -1,6 +1,4 @@
-function App() {
-  return <>Hello World!</>
-}
+import App from "./App";
 
-const Home = () => <App/>
+const Home = () => <App />;
 export default Home;
