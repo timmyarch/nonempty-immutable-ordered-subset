@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SizeField, SodasField } from "./Fields";
 import { ToppingsField } from "./ToppingsField";
 import styles from "../styles/Styles";
-import { NonEmptyOrderedImmutableSet } from "../Collections";
+import { OrderedSet, NonEmptyOrderedSet } from "../Collections";
 
 /* * * * * * * *
  * FIELD TYPES
@@ -29,7 +29,7 @@ const fetchAllToppings = (): Topping[] => [
 /** Component State */
 export type SelectionState = {
   size: Size | null;
-  toppings: NonEmptyOrderedImmutableSet<number> | null;
+  toppings: NonEmptyOrderedSet<number> | null;
   numSodas: number | null;
 };
 
@@ -57,7 +57,7 @@ export default function App() {
 
   return (
     <>
-      <h2 style={styles.title}>Pizza Time!</h2>
+      <h2 style={styles.title}>Pizza Time!!</h2>
 
       {/* Render each field based on oreder they appear in orderedFields list. */}
       {orderedFields.map(([fieldKey, fieldValue]) => (

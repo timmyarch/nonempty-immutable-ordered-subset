@@ -1,4 +1,4 @@
-import { NonEmptyOrderedImmutableSet } from "@/Collections";
+import { OrderedSet, NonEmptyOrderedSet } from "@/Collections";
 import { Topping, SelectionState } from "./App";
 import { SetState } from "./Fields";
 
@@ -10,7 +10,7 @@ export function ToppingsField({
   setState,
   allToppings,
 }: {
-  selectedToppings: NonEmptyOrderedImmutableSet<number>;
+  selectedToppings: NonEmptyOrderedSet<number>;
   setState: SetState<SelectionState>;
   allToppings: Topping[];
 }) {
@@ -26,36 +26,35 @@ export function ToppingsField({
     setState((prev) => ({
       ...prev,
       toppings: prev.toppings
-        ? NonEmptyOrderedImmutableSet(prev.toppings.head(), [
-            ...prev.toppings.tailArray(),
-            topping,
-          ]) // It is a fact this is a non-empty array.
-        : NonEmptyOrderedImmutableSet(topping, []),
+        ? NonEmptyOrderedSet({
+            head: prev.toppings.toNonEmptyArray().head,
+            tail: [...prev.toppings.toNonEmptyArray().tail, topping],
+          }) // It is a fact this is a non-empty array.
+        : NonEmptyOrderedSet({ head: topping, tail: [] }),
     }));
 
   const handleUnCheck = (topping: number) => {
     setState((prev) => {
-      if (!prev.toppings) {
-        throw "Impossible";
-      }
+      return {
+        ...prev,
+        toppings:
+          prev.toppings &&
+          (() => {
+            const newToppings = prev.toppings
+              .toArray()
+              .filter((id) => id != topping);
 
-      const newToppings = prev.toppings
-        .toArray()
-        .filter((id) => id !== topping);
-
-      if (newToppings.length > 0) {
-        const [head, ...tail] = newToppings;
-
-        return {
-          ...prev,
-          toppings: NonEmptyOrderedImmutableSet(head, tail),
-        };
-      } else {
-        return {
-          ...prev,
-          toppings: null,
-        };
-      }
+            if (newToppings.length > 0) {
+              const [head, ...tail] = newToppings;
+              return NonEmptyOrderedSet({
+                head,
+                tail,
+              });
+            } else {
+              return null;
+            }
+          })(),
+      };
     });
   };
 

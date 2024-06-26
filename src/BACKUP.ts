@@ -79,20 +79,20 @@ function CreateOrderedSet__ARRAY<T>(elts: T[]): OrderedSet<T> {
 
 export const OrderedSet = CreateOrderedSet__ARRAY;
 
-export type NonEmptyOrderedSet<T> = {
-  has: (elememnt: T) => boolean;
-  toArray: () => T[];
-  toNonEmptyArray: () => NonEmptyArray<T>;
-};
-
-// export type NonEmptyContainer<T, Container> = {
+// export type NonEmptyOrderedSet<T> = {
 //   has: (elememnt: T) => boolean;
 //   toArray: () => T[];
-//   toNonEmptyContainer: () => Container;
+//   toNonEmptyArray: () => NonEmptyArray<T>;
 // };
 
-// export type MyNonEmptyArray<T> = NonEmptyContainer<T, Array<T>>;
-// export type MyNonEmptyOrderedSet<T> = NonEmptyContainer<T, NonEmptyArray<T>>;
+export type NonEmptyContainer<T, Container> = {
+  has: (elememnt: T) => boolean;
+  toArray: () => T[];
+  toNonEmptyContainer: () => Container;
+};
+
+export type MyNonEmptyArray<T> = NonEmptyContainer<T, Array<T>>;
+export type NonEmptyOrderedSet<T> = NonEmptyContainer<T, NonEmptyArray<T>>;
 
 const s = NonEmptyOrderedSet({
   head: 5,
@@ -130,7 +130,11 @@ export function NonEmptyOrderedSet<T>(
   return {
     has: has,
     toArray: () => [...representationArray],
-    toNonEmptyArray: () => {
+    // toNonEmptyArray: () => {
+    //   const [head, ...tail] = representationArray;
+    //   return { head, tail };
+    // },
+    toNonEmptyContainer: () => {
       const [head, ...tail] = representationArray;
       return { head, tail };
     },
